@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Samuel Benedict Villamor – Data & Systems Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy:    #0D1B2A;
+    --blue:    #1A3A5C;
+    --accent:  #2E86AB;
+    --bright:  #5BC0EB;
+    --gold:    #F4A261;
+    --white:   #F8FAFC;
+    --muted:   #94A3B8;
+    --card:    #132030;
+    --border:  #1E3348;
+    --mono:    'JetBrains Mono', monospace;
+    --sans:    'Inter', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13,27,42,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem; height: 60px;
+  }
+  .nav-logo {
+    font-family: var(--mono); font-size: 0.85rem; color: var(--bright);
+    letter-spacing: 0.04em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none; font-size: 0.85rem;
+    font-weight: 500; letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 80px 2.5rem 2.5rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 50%, rgba(46,134,171,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(91,192,235,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 820px; position: relative; }
+
+  .hero-eyebrow {
+    font-family: var(--mono); font-size: 0.8rem;
+    color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block;
+    width: 32px; height: 1px; background: var(--accent);
+  }
+
+  .hero h1 {
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 700; line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+  }
+  .hero h1 span { color: var(--bright); }
+
+  .hero-role {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--muted); font-weight: 400;
+    margin-bottom: 1.6rem;
+  }
+  .hero-role strong { color: var(--gold); font-weight: 600; }
+
+  .hero-desc {
+    font-size: 1rem; color: #8FAFC8; max-width: 560px;
+    line-height: 1.75; margin-bottom: 2.4rem;
+  }
+
+  .hero-tags {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    margin-bottom: 2.4rem;
+  }
+  .tag {
+    font-family: var(--mono); font-size: 0.72rem;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 4px; color: var(--muted);
+    background: rgba(255,255,255,0.03);
+  }
+  .tag.active { border-color: var(--accent); color: var(--bright); }
+
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.7rem 1.5rem; border-radius: 6px;
+    font-size: 0.875rem; font-weight: 600;
+    text-decoration: none; cursor: pointer;
+    transition: all 0.2s; border: none;
+  }
+  .btn-primary {
+    background: var(--accent); color: var(--white);
+  }
+  .btn-primary:hover { background: var(--bright); color: var(--navy); }
+  .btn-outline {
+    background: transparent; color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--white); }
+
+  /* ── SECTIONS ── */
+  section { padding: 5rem 2.5rem; }
+  .section-inner { max-width: 960px; margin: 0 auto; }
+
+  .section-label {
+    font-family: var(--mono); font-size: 0.75rem;
+    color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700; margin-bottom: 0.6rem;
+  }
+  .section-sub {
+    color: var(--muted); font-size: 0.95rem; max-width: 540px;
+    margin-bottom: 3rem;
+  }
+  .divider {
+    width: 40px; height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    margin: 0.75rem 0 2rem;
+  }
+
+  /* ── ABOUT ── */
+  #about { background: rgba(255,255,255,0.015); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 3rem; align-items: start;
+  }
+  .about-text p {
+    color: #8FAFC8; line-height: 1.8; margin-bottom: 1rem; font-size: 0.95rem;
+  }
+  .about-text p strong { color: var(--white); font-weight: 600; }
+
+  .about-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  }
+  .stat-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1.25rem;
+  }
+  .stat-num {
+    font-size: 2rem; font-weight: 700; color: var(--bright);
+    font-family: var(--mono); line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+  .stat-label { font-size: 0.78rem; color: var(--muted); }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+  }
+  .skill-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.5rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .skill-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+  .skill-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: rgba(46,134,171,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; margin-bottom: 1rem;
+  }
+  .skill-name {
+    font-weight: 600; font-size: 0.95rem; margin-bottom: 0.3rem;
+  }
+  .skill-level {
+    font-family: var(--mono); font-size: 0.7rem;
+    color: var(--gold); margin-bottom: 0.75rem;
+  }
+  .skill-bar { height: 3px; background: var(--border); border-radius: 2px; }
+  .skill-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--bright));
+  }
+  .skill-desc { font-size: 0.8rem; color: var(--muted); margin-top: 0.6rem; line-height: 1.5; }
+
+  /* ── PROJECTS ── */
+  .projects-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.75rem;
+    display: flex; flex-direction: column;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .project-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--bright));
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .project-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .project-card:hover::before { opacity: 1; }
+
+  .project-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+  .project-num {
+    font-family: var(--mono); font-size: 0.7rem;
+    color: var(--accent); letter-spacing: 0.1em;
+  }
+  .project-badges { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .badge {
+    font-family: var(--mono); font-size: 0.65rem;
+    padding: 0.2rem 0.5rem; border-radius: 3px;
+    background: rgba(46,134,171,0.15); color: var(--bright);
+    border: 1px solid rgba(46,134,171,0.3);
+  }
+  .project-title {
+    font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem;
+  }
+  .project-desc {
+    font-size: 0.85rem; color: #8FAFC8; line-height: 1.65;
+    flex: 1; margin-bottom: 1.25rem;
+  }
+  .project-features { list-style: none; margin-bottom: 1.25rem; }
+  .project-features li {
+    font-size: 0.8rem; color: var(--muted); padding: 0.2rem 0;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .project-features li::before {
+    content: '▸'; color: var(--accent); font-size: 0.65rem;
+    flex-shrink: 0;
+  }
+  .project-link {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: var(--mono); font-size: 0.75rem;
+    color: var(--accent); text-decoration: none;
+    border-top: 1px solid var(--border); padding-top: 1rem;
+    transition: color 0.2s;
+  }
+  .project-link:hover { color: var(--bright); }
+
+  /* ── CODE PREVIEW ── */
+  .code-preview {
+    background: #0A1520; border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden;
+    margin-top: 3rem;
+  }
+  .code-topbar {
+    background: #0F1E2E; padding: 0.75rem 1.25rem;
+    display: flex; align-items: center; gap: 0.6rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #FF5F57; }
+  .dot-y { background: #FEBC2E; }
+  .dot-g { background: #28C840; }
+  .code-filename {
+    font-family: var(--mono); font-size: 0.75rem;
+    color: var(--muted); margin-left: 0.5rem;
+  }
+  .code-body {
+    padding: 1.5rem; font-family: var(--mono);
+    font-size: 0.78rem; line-height: 1.8;
+    overflow-x: auto; color: #A8C7E8;
+  }
+  .kw  { color: #C792EA; }  /* keyword */
+  .fn  { color: #82AAFF; }  /* function */
+  .cm  { color: #546E7A; font-style: italic; }  /* comment */
+  .str { color: #C3E88D; }  /* string */
+  .ty  { color: #FFCB6B; }  /* type */
+
+  /* ── EXPERIENCE ── */
+  .timeline { position: relative; padding-left: 1.5rem; }
+  .timeline::before {
+    content: ''; position: absolute; left: 0; top: 8px; bottom: 0;
+    width: 1px; background: var(--border);
+  }
+  .timeline-item { position: relative; margin-bottom: 2.5rem; }
+  .timeline-item::before {
+    content: ''; position: absolute; left: -1.5rem; top: 6px;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--accent); border: 2px solid var(--navy);
+    transform: translateX(-4px);
+  }
+  .tl-date {
+    font-family: var(--mono); font-size: 0.72rem;
+    color: var(--accent); margin-bottom: 0.3rem; letter-spacing: 0.05em;
+  }
+  .tl-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.15rem; }
+  .tl-company { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.75rem; }
+  .tl-bullets { list-style: none; }
+  .tl-bullets li {
+    font-size: 0.85rem; color: #8FAFC8;
+    padding: 0.2rem 0; display: flex; gap: 0.6rem;
+  }
+  .tl-bullets li::before { content: '–'; color: var(--accent); flex-shrink: 0; }
+
+  /* ── CERTIFICATIONS ── */
+  .certs-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+  .cert-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1.25rem;
+    display: flex; align-items: flex-start; gap: 0.75rem;
+  }
+  .cert-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+  .cert-name { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .cert-year { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); }
+
+  /* ── CONTACT ── */
+  #contact { background: rgba(255,255,255,0.015); border-top: 1px solid var(--border); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 3rem; align-items: center;
+  }
+  .contact-text h2 { font-size: 1.75rem; margin-bottom: 0.75rem; }
+  .contact-text p { color: var(--muted); font-size: 0.95rem; line-height: 1.7; }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-item {
+    display: flex; align-items: center; gap: 1rem;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1rem 1.25rem;
+    text-decoration: none; color: var(--white);
+    transition: border-color 0.2s;
+  }
+  .contact-item:hover { border-color: var(--accent); }
+  .contact-item-icon { font-size: 1.1rem; }
+  .contact-item-label { font-size: 0.7rem; color: var(--muted); }
+  .contact-item-value { font-size: 0.9rem; font-weight: 500; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center; padding: 2rem;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono); font-size: 0.72rem; color: var(--muted);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 720px) {
+    nav { padding: 0 1.25rem; }
+    .nav-links { gap: 1rem; }
+    section { padding: 3.5rem 1.25rem; }
+    .hero { padding: 80px 1.25rem 2rem; }
+    .about-grid, .projects-grid, .contact-grid { grid-template-columns: 1fr; }
+    .about-stats { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">sbhvillamor.dev</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Data &amp; Systems Portfolio</div>
+    <h1>Samuel Benedict<br/><span>H. Villamor</span></h1>
+    <p class="hero-role">
+      Junior Implementor &amp; System Administrator
+      — <strong>Latin Honors Graduate, BSIT</strong>
+    </p>
+    <p class="hero-desc">
+      I build the systems that track data, the queries that surface insights,
+      and the reports that help teams make decisions. Based in the Philippines,
+      open to opportunities in Pampanga and Metro Manila.
+    </p>
+    <div class="hero-tags">
+      <span class="tag active">SQL Server</span>
+      <span class="tag active">SSRS / RDL</span>
+      <span class="tag active">Microsoft Excel</span>
+      <span class="tag active">Power BI</span>
+      <span class="tag">Database Design</span>
+      <span class="tag">Audit Triggers</span>
+      <span class="tag">Stored Procedures</span>
+      <span class="tag">Figma</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="SamuelVillamor_Resume.pdf" class="btn btn-outline" download>Download Resume</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <p class="section-label">About Me</p>
+    <h2 class="section-title">Background &amp; Goals</h2>
+    <div class="divider"></div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I graduated <strong>Cum Laude with a BSIT degree from Pangasinan State University</strong> in 2025,
+          and immediately started working as a Junior Implementor and System Administrator at
+          One Document Corporation — where I built database triggers, designed SSRS reports,
+          and supported a business analyst team in a real healthcare information system environment.
+        </p>
+        <p>
+          My work sits at the intersection of <strong>database development and data reporting</strong>.
+          I write the SQL that keeps records clean, I build the triggers that keep data accountable,
+          and I design the reports that turn raw records into actionable output.
+        </p>
+        <p>
+          I'm now looking for a role where I can deepen that work — applying my skills in
+          <strong>database development, reporting, and systems support</strong>
+          in the Clark/Angeles City or Metro Manila area.
+        </p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-card">
+          <div class="stat-num">7+</div>
+          <div class="stat-label">Months professional experience</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">CL</div>
+          <div class="stat-label">Cum Laude — PSU Bayambang 2025</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">3</div>
+          <div class="stat-label">SQL portfolio projects</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">5</div>
+          <div class="stat-label">Certifications earned</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner">
+    <p class="section-label">Technical Skills</p>
+    <h2 class="section-title">What I Work With</h2>
+    <div class="divider"></div>
+    <div class="skills-grid">
+
+      <div class="skill-card">
+        <div class="skill-icon">🗄️</div>
+        <div class="skill-name">SQL Server / SSMS</div>
+        <div class="skill-level">Advanced</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div>
+        <div class="skill-desc">Table design, triggers, stored procedures, complex JOINs, window functions, audit logging.</div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">📊</div>
+        <div class="skill-name">SSRS / RDL Reports</div>
+        <div class="skill-level">Advanced</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+        <div class="skill-desc">Parameterized reports, tablix layouts, data-driven designs for auditing and business tracking.</div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">📗</div>
+        <div class="skill-name">Microsoft Excel</div>
+        <div class="skill-level">Advanced</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div>
+        <div class="skill-desc">Pivot tables, VLOOKUP/XLOOKUP, data cleaning, conditional formatting, dashboard building.</div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">📈</div>
+        <div class="skill-name">Power BI</div>
+        <div class="skill-level">Intermediate</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:60%"></div></div>
+        <div class="skill-desc">Data modeling, DAX measures, interactive dashboards. Power BI for Beginners certified (2026).</div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">🎨</div>
+        <div class="skill-name">Figma</div>
+        <div class="skill-level">Intermediate</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:65%"></div></div>
+        <div class="skill-desc">UI/UX prototyping, wireframing, component design for system interfaces.</div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">🔧</div>
+        <div class="skill-name">System Administration</div>
+        <div class="skill-level">Intermediate</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+        <div class="skill-desc">System configuration, helpdesk support, issue documentation, end-user training and assistance.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <p class="section-label">Portfolio</p>
+    <h2 class="section-title">Projects</h2>
+    <p class="section-sub">Built using real-world scenarios based on my work in health information systems. All data is synthetic and purpose-built to demonstrate skills.</p>
+    <div class="divider"></div>
+
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-num">01</span>
+          <div class="project-badges">
+            <span class="badge">SQL Server</span>
+            <span class="badge">SSMS</span>
+          </div>
+        </div>
+        <div class="project-title">Health Information System — Database Schema</div>
+        <p class="project-desc">
+          Designed a normalized relational database for a hospital admissions system —
+          covering patients, doctors, departments, and admissions with proper constraints
+          and referential integrity.
+        </p>
+        <ul class="project-features">
+          <li>5 normalized tables with FK constraints and CHECK rules</li>
+          <li>Sample data covering doctors, patients, and admissions</li>
+          <li>Mirrors real HIS database work from One Document Corporation</li>
+          <li>Ready to connect to an SSRS data source</li>
+        </ul>
+        <a href="https://github.com/samuelvillamor/portfolio/blob/main/sql/01_schema_and_data.sql" class="project-link" target="_blank">
+          View on GitHub ↗
+        </a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-num">02</span>
+          <div class="project-badges">
+            <span class="badge">SQL</span>
+            <span class="badge">Triggers</span>
+            <span class="badge">Audit</span>
+          </div>
+        </div>
+        <div class="project-title">Automated Audit Trail — INSERT / UPDATE / DELETE Triggers</div>
+        <p class="project-desc">
+          Built three SQL triggers that automatically log every admission change
+          into an audit table — capturing who changed what, when, and what the
+          old and new values were.
+        </p>
+        <ul class="project-features">
+          <li>AFTER INSERT trigger logs every new record with timestamp</li>
+          <li>AFTER UPDATE trigger captures old vs. new status and diagnosis</li>
+          <li>AFTER DELETE trigger preserves deleted record data in audit log</li>
+          <li>Dynamic remarks generated per change type</li>
+        </ul>
+        <a href="https://github.com/samuelvillamor/portfolio/blob/main/sql/02_audit_triggers.sql" class="project-link" target="_blank">
+          View on GitHub ↗
+        </a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-num">03</span>
+          <div class="project-badges">
+            <span class="badge">SQL</span>
+            <span class="badge">Analytics</span>
+            <span class="badge">Stored Proc</span>
+          </div>
+        </div>
+        <div class="project-title">Analytical Queries — Reporting &amp; Business Intelligence</div>
+        <p class="project-desc">
+          A set of analytical SQL queries designed to produce the kind of
+          output a BI report or Power BI dashboard would consume —
+          from occupancy summaries to patient history lookups.
+        </p>
+        <ul class="project-features">
+          <li>Active admissions report with patient, doctor, and dept details</li>
+          <li>Doctor workload summary using conditional aggregation</li>
+          <li>Department occupancy breakdown by status</li>
+          <li>Length-of-stay analysis and monthly trend with running total (CTE)</li>
+          <li>Stored procedure: usp_GetPatientHistory with @PatientID parameter</li>
+        </ul>
+        <a href="https://github.com/samuelvillamor/portfolio/blob/main/sql/03_analytical_queries.sql" class="project-link" target="_blank">
+          View on GitHub ↗
+        </a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-num">04</span>
+          <div class="project-badges">
+            <span class="badge">Excel</span>
+            <span class="badge">Power BI</span>
+            <span class="badge">Coming Soon</span>
+          </div>
+        </div>
+        <div class="project-title">HIS Dashboard — Excel &amp; Power BI</div>
+        <p class="project-desc">
+          An Excel operations dashboard and a companion Power BI report
+          built on the same hospital dataset — visualizing admissions trends,
+          department occupancy, and doctor workloads.
+        </p>
+        <ul class="project-features">
+          <li>Excel: pivot tables, dynamic charts, conditional formatting</li>
+          <li>Power BI: interactive slicers, DAX measures, drill-through pages</li>
+          <li>Dataset sourced from SQL Project 01 queries</li>
+          <li>In progress — available by July 2026</li>
+        </ul>
+        <a href="#contact" class="project-link">
+          Notify me when ready ↗
+        </a>
+      </div>
+
+    </div>
+
+    <!-- CODE PREVIEW -->
+    <div class="code-preview">
+      <div class="code-topbar">
+        <span class="dot dot-r"></span>
+        <span class="dot dot-y"></span>
+        <span class="dot dot-g"></span>
+        <span class="code-filename">02_audit_triggers.sql — sample</span>
+      </div>
+      <div class="code-body"><pre><span class="cm">-- Trigger: Log status and diagnosis changes (UPDATE)</span>
+<span class="kw">CREATE OR ALTER TRIGGER</span> <span class="fn">trg_Admission_Update</span>
+<span class="kw">ON</span> <span class="ty">Admissions</span>
+<span class="kw">AFTER UPDATE</span>
+<span class="kw">AS BEGIN</span>
+    <span class="kw">SET NOCOUNT ON</span>;
+
+    <span class="kw">INSERT INTO</span> <span class="ty">AdmissionAuditLog</span>
+        (AdmissionID, Action, OldStatus, NewStatus, OldDiagnosis, NewDiagnosis, Remarks)
+    <span class="kw">SELECT</span>
+        i.AdmissionID,
+        <span class="str">'UPDATE'</span>,
+        d.Status,   i.Status,
+        d.Diagnosis, i.Diagnosis,
+        <span class="kw">CASE</span>
+            <span class="kw">WHEN</span> d.Status &lt;&gt; i.Status <span class="kw">AND</span> d.Diagnosis &lt;&gt; i.Diagnosis
+                <span class="kw">THEN</span> <span class="str">'Status and Diagnosis updated.'</span>
+            <span class="kw">WHEN</span> d.Status &lt;&gt; i.Status
+                <span class="kw">THEN</span> <span class="str">'Status updated from ['</span> + d.Status + <span class="str">'] to ['</span> + i.Status + <span class="str">'].'</span>
+            <span class="kw">ELSE</span> <span class="str">'Diagnosis updated.'</span>
+        <span class="kw">END</span>
+    <span class="kw">FROM</span> inserted i
+    <span class="kw">INNER JOIN</span> deleted d <span class="kw">ON</span> i.AdmissionID = d.AdmissionID;
+<span class="kw">END</span>;</pre></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-inner">
+    <p class="section-label">Work History</p>
+    <h2 class="section-title">Experience</h2>
+    <div class="divider"></div>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="tl-date">JULY 2025 – FEBRUARY 2026</div>
+        <div class="tl-title">Junior Implementor | System Administrator</div>
+        <div class="tl-company">One Document Corporation — Bayambang, Pangasinan</div>
+        <ul class="tl-bullets">
+          <li>Designed and deployed SSRS (RDL) reports for auditing, data tracking, and management reporting.</li>
+          <li>Authored SQL database objects — tables, triggers, stored procedures — to enforce data integrity and automate audit trails.</li>
+          <li>Collaborated with Business Analyst team to gather requirements and implement system solutions.</li>
+          <li>Maintained system configurations and performed administrative tasks ensuring consistent uptime.</li>
+          <li>Provided Tier 1/2 helpdesk support, diagnosing and resolving system and data issues.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-date">FEBRUARY 2025 – MAY 2025</div>
+        <div class="tl-title">System Administrative Support Intern</div>
+        <div class="tl-company">One Document Corporation — Bayambang, Pangasinan</div>
+        <ul class="tl-bullets">
+          <li>Supported the Business Analyst team in system monitoring, data updates, and issue tracking.</li>
+          <li>Managed data records using Excel — cleaned datasets and prepared reports for review.</li>
+          <li>Documented system bugs and escalated to the technical team, contributing to process improvements.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certs" style="padding-top:0">
+  <div class="section-inner">
+    <p class="section-label">Credentials</p>
+    <h2 class="section-title">Education &amp; Certifications</h2>
+    <div class="divider"></div>
+
+    <div class="cert-card" style="margin-bottom:1.5rem; border-color: var(--accent);">
+      <div class="cert-icon">🎓</div>
+      <div>
+        <div class="cert-name">Bachelor of Science in Information Technology — <span style="color:var(--gold)">Cum Laude</span></div>
+        <div class="cert-year">Pangasinan State University – Bayambang Campus · 2025</div>
+      </div>
+    </div>
+
+    <div class="certs-grid">
+      <div class="cert-card">
+        <div class="cert-icon">📊</div>
+        <div>
+          <div class="cert-name">Power BI for Beginners</div>
+          <div class="cert-year">2026</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">🔒</div>
+        <div>
+          <div class="cert-name">Cybersecurity Foundations</div>
+          <div class="cert-year">2025</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">🔬</div>
+        <div>
+          <div class="cert-name">CITEDH-R1 Regional Research Conference</div>
+          <div class="cert-year">2024</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">🌐</div>
+        <div>
+          <div class="cert-name">Introduction to Packet Tracer</div>
+          <div class="cert-year">2023</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">📱</div>
+        <div>
+          <div class="cert-name">Fundamentals of Digital Marketing</div>
+          <div class="cert-year">2023</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="contact-text">
+        <p class="section-label">Get in Touch</p>
+        <h2>Open to Opportunities</h2>
+        <div class="divider"></div>
+        <p>
+          I'm actively looking for roles in IT, data, reporting, or systems
+          in <strong style="color:var(--white)">Pampanga (Clark / Angeles City)</strong> or
+          <strong style="color:var(--white)">Metro Manila</strong>.
+          Open to onsite or hybrid setups.
+        </p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:villamorsamuelbenedict@gmail.com" class="contact-item">
+          <span class="contact-item-icon">✉️</span>
+          <div>
+            <div class="contact-item-label">Email</div>
+            <div class="contact-item-value">villamorsamuelbenedict@gmail.com</div>
+          </div>
+        </a>
+        <a href="tel:+639948950132" class="contact-item">
+          <span class="contact-item-icon">📞</span>
+          <div>
+            <div class="contact-item-label">Phone</div>
+            <div class="contact-item-value">0994 895 0132</div>
+          </div>
+        </a>
+        <a href="https://linkedin.com/in/samuel-villamor" class="contact-item" target="_blank">
+          <span class="contact-item-icon">💼</span>
+          <div>
+            <div class="contact-item-label">LinkedIn</div>
+            <div class="contact-item-value">linkedin.com/in/samuel-villamor</div>
+          </div>
+        </a>
+        <a href="https://github.com/samuelvillamor" class="contact-item" target="_blank">
+          <span class="contact-item-icon">🐙</span>
+          <div>
+            <div class="contact-item-label">GitHub</div>
+            <div class="contact-item-value">github.com/samuelvillamor</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Samuel Benedict H. Villamor &nbsp;·&nbsp; Built for GitHub Pages
+</footer>
+
+</body>
+</html>
