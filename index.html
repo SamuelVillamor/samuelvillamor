@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Samuel Benedict Villamor – Data & Systems Portfolio</title>
+<title>Samuel Benedict Villamor Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
@@ -408,7 +408,7 @@
       — <strong>Latin Honors Graduate, BSIT</strong>
     </p>
     <p class="hero-desc">
-      I build the system queries that surface insights,
+      I build the systems that track data, the queries that surface insights,
       and the reports that help teams make decisions.
     </p>
     <div class="hero-tags">
@@ -439,16 +439,17 @@
         <p>
           I graduated <strong>Cum Laude with a BSIT degree from Pangasinan State University</strong> in 2025,
           and immediately started working as a Junior Implementor and System Administrator at
-          One Document Corporation where I built database triggers, designed SSRS reports,
+          One Document Corporation. Where I built database triggers, designed SSRS reports,
           and supported a business analyst team in a real healthcare information system environment.
         </p>
         <p>
           My work sits at the intersection of <strong>database development and data reporting</strong>.
-          I write the SQL that keeps records clean, I build the triggers that keep data accountable,
-          and I design the reports that turn raw records into actionable output.
+          I write the SQL that keeps records auditable, I build the triggers that track every
+          field-level change across Hospital Information System tables, and I design the parameterized
+          SSRS reports that turn raw hospital data into finance-ready output.
         </p>
         <p>
-          I'm now looking for a role where I can deepen that work, applying my skills in
+          I'm now looking for a role where I can deepen that work. Applying my skills in
           <strong>database development, reporting, and systems support.</strong>
         </p>
       </div>
@@ -527,7 +528,7 @@
         <div class="skill-name">System Administration</div>
         <div class="skill-level">Intermediate</div>
         <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
-        <div class="skill-desc">System configuration, helpdesk support, end-user training and assistance.</div>
+        <div class="skill-desc">System configuration, helpdesk support, issue documentation, end-user training and assistance.</div>
       </div>
 
     </div>
@@ -549,22 +550,24 @@
           <span class="project-num">01</span>
           <div class="project-badges">
             <span class="badge">SQL Server</span>
-            <span class="badge">SSMS</span>
+            <span class="badge">Triggers</span>
+            <span class="badge">Audit Log</span>
           </div>
         </div>
-        <div class="project-title">Health Information System — Database Schema</div>
+        <div class="project-title">PhilHealth Ledger Audit Trigger — psPHICLedgers</div>
         <p class="project-desc">
-          Designed a normalized relational database for a hospital admissions system —
-          covering patients, doctors, departments, and admissions with proper constraints
-          and referential integrity.
+          Wrote and deployed an AFTER UPDATE trigger on the PhilHealth main ledger table
+          of a live Hospital Information System. Logs field-level changes per column into
+          a centralized audit table — tracking who changed what and when, in Philippine time (UTC+8).
         </p>
         <ul class="project-features">
-          <li>5 normalized tables with FK constraints and CHECK rules</li>
-          <li>Sample data covering doctors, patients, and admissions</li>
-          <li>Mirrors real HIS database work from One Document Corporation</li>
-          <li>Ready to connect to an SSRS data source</li>
+          <li>Tracks 5 columns: isdelete, caseRateHBAmount1/2, caseRatePFAmount1/2</li>
+          <li>Resolves modifier name via JOIN to appsysUsers and psPersonalData</li>
+          <li>NULL-safe comparisons using ISNULL() to prevent false-positive logs</li>
+          <li>Separate INSERT per column — only fires when that specific field changes</li>
+          <li>TriggerSource flag set to 'MAIN' for filtering in audit log queries</li>
         </ul>
-        <a href="https://github.com/SamuelVillamor/samuelvillamor/blob/main/sql/01_schema_and_data.sql" class="project-link" target="_blank">
+        <a href="https://github.com/SamuelVillamor/samuelvillamor/portfolio/blob/main/sql/01_phic_ledger_audit_trigger.sql" class="project-link" target="_blank">
           View on GitHub ↗
         </a>
       </div>
@@ -575,22 +578,23 @@
           <div class="project-badges">
             <span class="badge">SQL</span>
             <span class="badge">Triggers</span>
-            <span class="badge">Audit</span>
+            <span class="badge">PhilHealth</span>
           </div>
         </div>
-        <div class="project-title">Automated Audit Trail — INSERT / UPDATE / DELETE Triggers</div>
+        <div class="project-title">PhilHealth PF Ledger Audit Trigger — psPHICLedgersPF</div>
         <p class="project-desc">
-          Built three SQL triggers that automatically log every admission change
-          into an audit table — capturing who changed what, when, and what the
-          old and new values were.
+          Companion trigger to Project 01, written for the Professional Fee (PF) sub-ledger table.
+          Logs changes to PhilHealth type, PF amount, and covered services — linking back to the
+          main ledger via foreign key for full audit traceability across both tables.
         </p>
         <ul class="project-features">
-          <li>AFTER INSERT trigger logs every new record with timestamp</li>
-          <li>AFTER UPDATE trigger captures old vs. new status and diagnosis</li>
-          <li>AFTER DELETE trigger preserves deleted record data in audit log</li>
-          <li>Dynamic remarks generated per change type</li>
+          <li>Tracks 3 columns: phictype, PFamount, phicservices</li>
+          <li>Links PF table to parent psPHICLedgers via FK_TRXNO_psPHICLedgers</li>
+          <li>NULL-safe 3-condition WHERE clause for phictype and phicservices changes</li>
+          <li>TriggerSource set to 'PF' — separates PF logs from MAIN logs in audit queries</li>
+          <li>Stores PF_TRXNO alongside FK_TRXNO for granular row-level traceability</li>
         </ul>
-        <a href="https://github.com/SamuelVillamor/samuelvillamor/portfolio/blob/main/sql/02_audit_triggers.sql" class="project-link" target="_blank">
+        <a href="https://github.com/SamuelVillamor/samuelvillamor/portfolio/blob/main/sql/02_phic_pf_ledger_audit_trigger.sql" class="project-link" target="_blank">
           View on GitHub ↗
         </a>
       </div>
@@ -600,24 +604,25 @@
           <span class="project-num">03</span>
           <div class="project-badges">
             <span class="badge">SQL</span>
-            <span class="badge">Analytics</span>
-            <span class="badge">Stored Proc</span>
+            <span class="badge">SSRS</span>
+            <span class="badge">Reporting</span>
           </div>
         </div>
-        <div class="project-title">Analytical Queries — Reporting &amp; Business Intelligence</div>
+        <div class="project-title">Patient PN Balance Report — SSRS Dataset Queries</div>
         <p class="project-desc">
-          A set of analytical SQL queries designed to produce the kind of
-          output a BI report or Power BI dashboard would consume —
-          from occupancy summaries to patient history lookups.
+          Three parameterized SQL queries built as SSRS datasets for a Promissory Note
+          balance report. Given a patient MRN parameter, the report pulls total PN amount,
+          Official Receipt cash payments, and Credit Memo payments from separate tables
+          into a unified finance-ready output.
         </p>
         <ul class="project-features">
-          <li>Active admissions report with patient, doctor, and dept details</li>
-          <li>Doctor workload summary using conditional aggregation</li>
-          <li>Department occupancy breakdown by status</li>
-          <li>Length-of-stay analysis and monthly trend with running total (CTE)</li>
-          <li>Stored procedure: usp_GetPatientHistory with @PatientID parameter</li>
+          <li>Dataset 1: PN summary using a subquery to aggregate billtrancode credits (PNHB, PNPF, PNPR, PNADJ)</li>
+          <li>Dataset 2: Official Receipt payments via multi-table JOIN across faCRMstr, faArinv, emdPatients</li>
+          <li>Dataset 3: Credit Memo payments grouped by doctype and dmcmno with SUM aggregation</li>
+          <li>All datasets filtered by @MRN parameter for SSRS drill-down use</li>
+          <li>HAVING clause ensures only patients with outstanding PN balance appear</li>
         </ul>
-        <a href="https://github.com/SamuelVillamor/samuelvillamor/portfolio/blob/main/sql/03_analytical_queries.sql" class="project-link" target="_blank">
+        <a href="https://github.com/SamuelVillamor/samuelvillamor/portfolio/blob/main/sql/03_patient_pn_balance_report_queries.sql" class="project-link" target="_blank">
           View on GitHub ↗
         </a>
       </div>
@@ -628,7 +633,6 @@
           <div class="project-badges">
             <span class="badge">Excel</span>
             <span class="badge">Power BI</span>
-            <span class="badge">Coming Soon</span>
           </div>
         </div>
         <div class="project-title">HIS Dashboard — Excel &amp; Power BI</div>
@@ -639,9 +643,8 @@
         </p>
         <ul class="project-features">
           <li>Excel: pivot tables, dynamic charts, conditional formatting</li>
-          <li>Power BI: interactive slicers, DAX measures, drill-through pages</li>
+          <li>Power BI: interactive slicers, DAX measures</li>
           <li>Dataset sourced from SQL Project 01 queries</li>
-          <li>In progress — available by July 2026</li>
         </ul>
         <a href="#contact" class="project-link">
           Notify me when ready ↗
@@ -656,32 +659,25 @@
         <span class="dot dot-r"></span>
         <span class="dot dot-y"></span>
         <span class="dot dot-g"></span>
-        <span class="code-filename">02_audit_triggers.sql — sample</span>
+        <span class="code-filename">01_phic_ledger_audit_trigger.sql — sample</span>
       </div>
-      <div class="code-body"><pre><span class="cm">-- Trigger: Log status and diagnosis changes (UPDATE)</span>
-<span class="kw">CREATE OR ALTER TRIGGER</span> <span class="fn">trg_Admission_Update</span>
-<span class="kw">ON</span> <span class="ty">Admissions</span>
-<span class="kw">AFTER UPDATE</span>
-<span class="kw">AS BEGIN</span>
-    <span class="kw">SET NOCOUNT ON</span>;
-
-    <span class="kw">INSERT INTO</span> <span class="ty">AdmissionAuditLog</span>
-        (AdmissionID, Action, OldStatus, NewStatus, OldDiagnosis, NewDiagnosis, Remarks)
-    <span class="kw">SELECT</span>
-        i.AdmissionID,
-        <span class="str">'UPDATE'</span>,
-        d.Status,   i.Status,
-        d.Diagnosis, i.Diagnosis,
-        <span class="kw">CASE</span>
-            <span class="kw">WHEN</span> d.Status &lt;&gt; i.Status <span class="kw">AND</span> d.Diagnosis &lt;&gt; i.Diagnosis
-                <span class="kw">THEN</span> <span class="str">'Status and Diagnosis updated.'</span>
-            <span class="kw">WHEN</span> d.Status &lt;&gt; i.Status
-                <span class="kw">THEN</span> <span class="str">'Status updated from ['</span> + d.Status + <span class="str">'] to ['</span> + i.Status + <span class="str">'].'</span>
-            <span class="kw">ELSE</span> <span class="str">'Diagnosis updated.'</span>
-        <span class="kw">END</span>
-    <span class="kw">FROM</span> inserted i
-    <span class="kw">INNER JOIN</span> deleted d <span class="kw">ON</span> i.AdmissionID = d.AdmissionID;
-<span class="kw">END</span>;</pre></div>
+      <div class="code-body"><pre><span class="cm">-- Log caseRateHBAmount1 if changed</span>
+<span class="kw">INSERT INTO</span> dbo.<span class="ty">philhealthLogs</span>
+    (FK_TRXNO, columnname, modifiedDate, modifiedBy, oldvalue, newvalue, TriggerSource, tablename)
+<span class="kw">SELECT</span>
+    i.PK_TRXNO,
+    <span class="str">'caseRateHBAmount1'</span>,
+    <span class="fn">FORMAT</span>(<span class="fn">DATEADD</span>(<span class="str">HOUR</span>, 8, <span class="fn">SYSUTCDATETIME</span>()), <span class="str">'MMM dd yyyy h:mmtt'</span>),
+    <span class="fn">CONCAT</span>(pd.lastname, <span class="str">', '</span>, pd.firstname, <span class="str">' '</span>, pd.middlename),
+    <span class="fn">ISNULL</span>(d.caseRateHBAmount1, 0),
+    <span class="fn">ISNULL</span>(i.caseRateHBAmount1, 0),
+    <span class="str">'MAIN'</span>,
+    <span class="str">'psPHICLedgers'</span>
+<span class="kw">FROM</span> inserted i
+<span class="kw">INNER JOIN</span> deleted d       <span class="kw">ON</span> i.PK_TRXNO = d.PK_TRXNO
+<span class="kw">INNER JOIN</span> <span class="ty">appsysUsers</span> au  <span class="kw">ON</span> i.editby = au.usercode
+<span class="kw">INNER JOIN</span> <span class="ty">psPersonaldata</span> pd <span class="kw">ON</span> au.PK_appsysUsers = pd.PK_psPersonalData
+<span class="kw">WHERE</span> <span class="fn">ISNULL</span>(i.caseRateHBAmount1, 0) &lt;&gt; <span class="fn">ISNULL</span>(d.caseRateHBAmount1, 0);</pre></div>
     </div>
   </div>
 </section>
